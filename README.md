@@ -20,7 +20,7 @@ jobs:
       - name: Check out source code
         uses: actions/checkout@v3
 
-      - uses: security-actions/trivy-misconf-scan@main
+      - uses: security-actions/trivy-misconf-scan@v0.1.0
         with:
           policy-repository: 'github.com/mrtc0-sandbox/trivy-sandbox/policies'
           policy-directory: 'policy'
