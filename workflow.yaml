@@ -1,0 +1,18 @@
+name: CI
+on:
+  - pull_request
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # ratchet:actions/checkout@v2
+
+      - uses: security-actions/trivy-misconf-scan@main
+        with:
+          policy-repository: 'github.com/mrtc0-sandbox/trivy-sandbox/policies'
+          policy-directory: 'policy'
+          namespaces: 'user'
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
