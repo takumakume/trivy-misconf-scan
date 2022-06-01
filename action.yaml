@@ -1,0 +1,18 @@
+name: 'trivy-misconf-scan'
+description: 'Misconfiguration Scanner with Trivy'
+author: 'mrtc0'
+inputs:
+  policy:
+    description: 'Policy repository'
+    required: false
+    default: ''
+  namespaces:
+    description: 'Policy namespaces'
+    required: false
+    default: ''
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - '-a ${{ inputs.policy }}'
+    - '-b ${{ inputs.namespaces }}'
