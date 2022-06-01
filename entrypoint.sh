@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 while getopts "a:b:c:" o; do
   case "${o}" in
