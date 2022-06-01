@@ -17,14 +17,17 @@ while getopts "a:b:c:" o; do
 done
 
 TRIVY_ARGS="-q conf -f sarif"
+policy_repository=$(echo $policy_repository | tr -d '\r')
 if [ $policy_repository ]; then
   conftest pull $policy_repository -p trivy-policies
 fi
 
+policy_dir=$(echo $policy_dir | tr -d '\r')
 if [ $policy_dir ]; then
   TRIVY_ARGS="$TRIVY_ARGS --policy trivy-policies/$policy_dir"
 fi
 
+namespace=$(echo $namespace | tr -d '\r')
 if [ $namespaces ]; then
   TRIVY_ARGS="$TRIVY_ARGS --namespaces $namespaces"
 fi
