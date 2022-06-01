@@ -20,7 +20,7 @@ if [ $policy ]; then
 fi
 
 if [ $namespaces ]; then
-  TRIVY_ARGS="$TRIVY_ARGS --namespaces namespaces"
+  TRIVY_ARGS="$TRIVY_ARGS --namespaces $namespaces"
 fi
 
 trivy $TRIVY_ARGS . \
