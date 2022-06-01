@@ -2,21 +2,27 @@
 
 set -e
 
-while getopts "a:b:" o; do
+while getopts "a:b:c:" o; do
   case "${o}" in
     a)
-      export policy=${OPTARG}
+      export policy_repository=${OPTARG}
     ;;
     b)
+      export policy_dir=${OPTARG}
+    ;;
+    c)
       export namespaces=${OPTARG}
     ;;
   esac
 done
 
 TRIVY_ARGS="-q conf -f sarif"
-if [ $policy ]; then
-  conftest pull $policy -p policy
-  TRIVY_ARGS="$TRIVY_ARGS --policy policy"
+if [ $policy_repository ]; then
+  conftest pull $policy_repository -p trivy-policies
+fi
+
+if [ $policy_dir ]; then
+  TRIVY_ARGS="$TRIVY_ARGS --policy trivy-policies/$policy_dir"
 fi
 
 if [ $namespaces ]; then
