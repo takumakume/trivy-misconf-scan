@@ -33,6 +33,6 @@ if [ $namespaces ]; then
 fi
 
 trivy $TRIVY_ARGS . \
-  | jq '.runs[].results[] | "\(.level[0:1]):\(.locations[].physicalLocation.artifactLocation.uri):\(.locations[].physicalLocation.region.startLine):\(.locations[].physicalLocation.region.endLine) \(.message.text)"' \
+  | jq '.runs[].results[]| if .locations[].physicalLocation.region.endLine then .line=.locations[].physicalLocation.region.endLine else .line=.locations[].physicalLocation.region.startLine end | "\(.level[0:1]):\(.locations[].physicalLocation.artifactLocation.uri):\(.line) \(.message.text)"' \
   | sed "s/\\\\n/<br>/g" \
   | reviewdog -efm="\"%t:%f:%l:%e %m\"" --diff="git diff -U1000 ${GITHUB_REF}" -reporter=github-pr-review
